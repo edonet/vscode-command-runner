@@ -11,16 +11,38 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:command-runner.run"
     ],
-    "main": "./extension",
+    "main": "./src/extension",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "command-runner.run",
+                "title": "Run Command",
+                "icon": {
+                    "light": "./images/run-light.png",
+                    "dark": "./images/run-dark.png"
+                }
             }
-        ]
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Run Command configuration",
+            "properties": {
+                "command-runner.commands": {
+                    "type": "object",
+                    "default": {
+                        "echo": "echo Hello"
+                    },
+                    "description": "Set the custom command to run.",
+                    "scope": "resource"
+                }
+            }
+        }
+    },
+    "commands": {
+        "node": "node -v",
+        "var": "echo ${workspaceFolder}"
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",

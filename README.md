@@ -1,4 +1,4 @@
-# vscode-command-runner README
+# VSCode Command Runner
 
 This is the README for your extension "vscode-command-runner". After writing up a brief description, we recommend including the following sections.
 
