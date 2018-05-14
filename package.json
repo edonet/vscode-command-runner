@@ -1,0 +1,45 @@
+{
+    "name": "vscode-command-runner",
+    "displayName": "Command Runner",
+    "description": "vscode custom shell command runner",
+    "version": "0.0.1",
+    "publisher": "edonet",
+    "engines": {
+        "vscode": "^1.23.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.sayHello"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.sayHello",
+                "title": "Hello World"
+            }
+        ]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "bugs": {
+        "url": "https://github.com/edonet/vscode-command-runner/issues",
+        "email": "edonet@163.com"
+    },
+    "homepage": "https://github.com/edonet/vscode-command-runner/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/edonet/vscode-command-runner.git"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "eslint": "^4.11.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
