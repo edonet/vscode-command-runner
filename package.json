@@ -3,6 +3,7 @@
     "displayName": "Command Runner",
     "description": "vscode custom shell command runner",
     "version": "0.0.1",
+    "icon": "images/logo.png",
     "publisher": "edonet",
     "engines": {
         "vscode": "^1.23.0"
@@ -18,11 +19,7 @@
         "commands": [
             {
                 "command": "command-runner.run",
-                "title": "Run Command",
-                "icon": {
-                    "light": "./images/run-light.png",
-                    "dark": "./images/run-dark.png"
-                }
+                "title": "Run Command"
             }
         ],
         "configuration": {
@@ -36,13 +33,30 @@
                     },
                     "description": "Set the custom command to run.",
                     "scope": "resource"
+                },
+                "command-runner.showRunCommandInEditorContextMenu": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show 'Run Command' in editor context menu",
+                    "scope": "resource"
                 }
             }
+        },
+        "keybindings": [{
+            "command": "command-runner.run",
+            "key": "ctrl+shift+r",
+            "mac": "ctrl+shift+r",
+            "when": "editorTextFocus"
+        }],
+        "menus": {
+            "editor/context": [
+                {
+                    "when": "!inOutput && config.command-runner.showRunCommandInEditorContextMenu",
+                    "command": "command-runner.run",
+                    "group": "navigation"
+                }
+            ]
         }
-    },
-    "commands": {
-        "node": "node -v",
-        "file": "echo ${ file }"
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
