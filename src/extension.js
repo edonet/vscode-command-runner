@@ -13,7 +13,9 @@
  */
 const
     vscode = require('vscode'),
-    utils = require('./utils');
+    execCommand = require('./execCammand'),
+    getPackageConfig = require('./getPackageConfig'),
+    { resolveVariable, variableAccessor } = require('./variables');
 
 
 /**
@@ -45,16 +47,20 @@ function deactivate() {
  *****************************************
  */
 function runCommand() {
-    let folders = utils.getWorkspaceFolders(),
-        file = utils.getActiveDocument(),
-        commands = utils.getConfig('command-runner', 'commands', folders),
-        keys = Object.keys(commands);
+    let accessor = variableAccessor(),
+        folders = accessor.getWorkspaceFolders(),
+        config = accessor.getConfigurationValue('command-runner'),
+        commands = getPackageConfig('commands', config.get('commands'), folders),
+        pick;
 
-    console.log(Object.keys(vscode));
-    console.log(commands, keys, folders, file, utils.getRootFolder());
-    vscode.window.showQuickPick(keys, { placeHolder: 'Type or select command to run' }).then(key => {
-        console.log(key);
-    });
+
+    // 显示下拉选择列表
+    pick = vscode.window.showQuickPick(
+        Object.keys(commands), { placeHolder: 'Type or select command to run' }
+    );
+
+    // 执行选择的命令
+    pick.then(key => execCommand(resolveVariable(commands[key], accessor)));
 }
 
 

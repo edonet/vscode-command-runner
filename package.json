@@ -32,7 +32,7 @@
                 "command-runner.commands": {
                     "type": "object",
                     "default": {
-                        "echo": "echo Hello"
+                        "echo": "echo ${workspaceFolder}"
                     },
                     "description": "Set the custom command to run.",
                     "scope": "resource"
@@ -42,7 +42,7 @@
     },
     "commands": {
         "node": "node -v",
-        "var": "echo ${workspaceFolder}"
+        "file": "echo ${ file }"
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
