@@ -13,8 +13,8 @@
  */
 const
     vscode = require('vscode'),
-    execCommand = require('./execCammand'),
     getPackageConfig = require('./getPackageConfig'),
+    execCommand = require('./execCammand'),
     { resolveVariable, variableAccessor } = require('./variables');
 
 
@@ -29,15 +29,6 @@ function activate(context) {
     context.subscriptions.push(
         vscode.commands.registerCommand('command-runner.run', runCommand)
     );
-}
-
-/**
- *****************************************
- * 退出激活状态
- *****************************************
- */
-function deactivate() {
-    // do some things;
 }
 
 
@@ -69,4 +60,4 @@ function runCommand() {
  * 抛出接口
  *****************************************
  */
-module.exports = { activate, deactivate };
+module.exports = { activate };

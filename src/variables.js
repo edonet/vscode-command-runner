@@ -18,7 +18,6 @@ const
     vscode = require('vscode'),
     match = /\$\{(.*?)\}/g;
 
-console.log(os.homedir());
 
 /**
  *****************************************
