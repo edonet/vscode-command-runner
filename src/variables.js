@@ -13,10 +13,12 @@
  *****************************************
  */
 const
+    os = require('os'),
     path = require('path'),
     vscode = require('vscode'),
     match = /\$\{(.*?)\}/g;
 
+console.log(os.homedir());
 
 /**
  *****************************************
@@ -34,7 +36,7 @@ function resolveVariable(str = '', accessor = variableAccessor()) {
         // 解析变量
         switch (variable) {
             case 'config':
-                return args && accessor.getConfigurationValue(args);
+                return args && accessor.getConfigurationValue().get(args);
             case 'env':
                 return args && accessor.getEnvVariable(args);
             case 'command':
@@ -58,14 +60,12 @@ function variableAccessor() {
 
     // 返回数据接口
     return {
-        getConfigurationValue(section) {
-            let folder = this.getActiveFolder();
+        getConfigurationValue(section, name) {
+            let folder = this.getActiveFolder() || {},
+                config = vscode.workspace.getConfiguration(section, folder.uri);
 
-            if (folder) {
-                return vscode.workspace.getConfiguration(section, folder.uri);
-            }
-
-            return vscode.workspace.getConfiguration(section, '');
+            // 返回配置
+            return name ? config.get(name) : config;
         },
         getActiveEditor() {
 
@@ -147,11 +147,11 @@ function variableAccessor() {
                         case 'file':
                             return variables[name] = fsPath;
                         case 'relativeFile':
-                            return variables[name] = path.relative(this.getWorkspaceFolder().uri.fsPath, fsPath);
+                            return variables[name] = path.relative(this.getActiveFolder().uri.fsPath, fsPath);
                         case 'fileBasename':
                             return variables[name] = path.basename(fsPath);
                         case 'fileBasenameNoExtension':
-                            return variables[name] = path.basename(fsPath, '.' + path.extname(fsPath));
+                            return variables[name] = path.basename(fsPath, path.extname(fsPath));
                         case 'fileDirname':
                             return variables[name] = path.dirname(fsPath);
                         case 'fileExtname':
@@ -172,22 +172,27 @@ function variableAccessor() {
             switch (name) {
                 case 'workspaceFolder':
                 case 'workspaceFolderBasename':
-                    return this.getFolderInfomation(name);
+                    return this.formatPath(this.getFolderInfomation(name));
                 case 'file':
                 case 'relativeFile':
                 case 'fileBasename':
                 case 'fileBasenameNoExtension':
                 case 'fileDirname':
                 case 'fileExtname':
-                    return this.getFileInfomation(name);
-                case 'cwd':
-                    return process.cwd();
+                    return this.formatPath(this.getFileInfomation(name));
+                case 'homedir':
+                    return this.formatPath(os.homedir());
+                case 'tmpdir':
+                    return this.formatPath(os.tmpdir());
                 default:
                     return '';
             }
         },
         getEnvVariable(name) {
             return env[name.toUpperCase()] || '';
+        },
+        formatPath(str) {
+            return str.replace(/\\/g, '\\').replace(/\s/g, '\\ ');
         }
     };
 }

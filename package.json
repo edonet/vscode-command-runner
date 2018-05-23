@@ -2,11 +2,11 @@
     "name": "vscode-command-runner",
     "displayName": "Command Runner",
     "description": "vscode custom shell command runner",
-    "version": "0.0.1",
+    "version": "0.0.101",
     "icon": "images/logo.png",
     "publisher": "edonet",
     "engines": {
-        "vscode": "^1.23.0"
+        "vscode": "^1.20.0"
     },
     "categories": [
         "Other"
@@ -24,12 +24,12 @@
         ],
         "configuration": {
             "type": "object",
-            "title": "Run Command configuration",
+            "title": "Run Command Configuration",
             "properties": {
                 "command-runner.commands": {
                     "type": "object",
                     "default": {
-                        "echo": "echo ${workspaceFolder}"
+                        "echo": "echo ${file}"
                     },
                     "description": "Set the custom command to run.",
                     "scope": "resource"
@@ -45,8 +45,7 @@
         "keybindings": [{
             "command": "command-runner.run",
             "key": "ctrl+shift+r",
-            "mac": "ctrl+shift+r",
-            "when": "editorTextFocus"
+            "mac": "ctrl+shift+r"
         }],
         "menus": {
             "editor/context": [
@@ -61,6 +60,21 @@
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
         "test": "node ./node_modules/vscode/bin/test"
+    },
+    "commands": {
+        "file": "cat ${file}",
+        "fileBasename": "echo ${fileBasename}",
+        "fileBasenameNoExtension": "echo ${fileBasenameNoExtension}",
+        "fileDirname": "echo ${fileDirname}",
+        "fileExtname": "echo ${fileExtname}",
+        "relativeFile": "echo ${relativeFile}",
+        "workspaceFolder": "echo ${workspaceFolder}",
+        "workspaceFolderBasename": "echo ${workspaceFolderBasename}",
+        "homedir": "echo ${homedir}",
+        "tmpdir": "echo ${tmpdir}",
+        "env": "echo ${env:PATH}",
+        "config": "echo ${config:editor.fontSize}",
+        "command": "${command:workbench.action.openRecent}"
     },
     "bugs": {
         "url": "https://github.com/edonet/vscode-command-runner/issues",

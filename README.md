@@ -30,6 +30,22 @@ or in node module package.json
 }
 ```
 
+## Predefined Variable
+
+* ${file}: activated file path;
+* ${fileBasename}: activated file basename;
+* ${fileBasenameNoExtension}: activated file basename with no extension;
+* ${fileDirname}: activated file dirname;
+* ${fileExtname}: activated file extension;
+* ${relativeFile}: activated file relative path;
+* ${workspaceFolder}: activated workspace folder path;
+* ${workspaceFolderBasename}: activated workspace folder basename;
+* ${homedir}: the home directory of the current user;
+* ${tmpdir}: default directory for temporary files;
+* ${env:PATH}: shell environment variable "PATH";
+* ${config:editor.fontSize}: vscode config variable;
+* ${command:workbench.action.terminal.clear}: run vscode command;
+
 ## Usages
 
 * use shortcut `Ctrl+Shift+R`
