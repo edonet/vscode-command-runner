@@ -13,9 +13,9 @@
  */
 const
     vscode = require('vscode'),
-    getPackageConfig = require('./getPackageConfig'),
-    execCommand = require('./execCammand'),
-    { resolveVariable, variableAccessor } = require('./variables');
+    Accessor = require('./accessor'),
+    Command = require('./command'),
+    CommandRunner = require('./commandRunner');
 
 
 /**
@@ -24,34 +24,17 @@ const
  *****************************************
  */
 function activate(context) {
+    let accessor = new Accessor(),
+        command = new Command(accessor),
+        commandRunner = new CommandRunner(command);
+
+    // 添加事件监听
+    context.subscriptions.push(commandRunner);
 
     // 注册【命令运行】命令
     context.subscriptions.push(
-        vscode.commands.registerCommand('command-runner.run', runCommand)
+        vscode.commands.registerCommand('command-runner.run', () => commandRunner.run())
     );
-}
-
-
-/**
- *****************************************
- * 执行命令
- *****************************************
- */
-function runCommand() {
-    let accessor = variableAccessor(),
-        folders = accessor.getWorkspaceFolders(),
-        config = accessor.getConfigurationValue('command-runner'),
-        commands = getPackageConfig('commands', config.get('commands'), folders),
-        pick;
-
-
-    // 显示下拉选择列表
-    pick = vscode.window.showQuickPick(
-        Object.keys(commands), { placeHolder: 'Type or select command to run' }
-    );
-
-    // 执行选择的命令
-    pick.then(key => execCommand(resolveVariable(commands[key], accessor)));
 }
 
 

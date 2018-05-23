@@ -44,7 +44,7 @@
         },
         "keybindings": [{
             "command": "command-runner.run",
-            "key": "ctrl+shift+r",
+            "key": "ctrl+alt+r",
             "mac": "ctrl+shift+r"
         }],
         "menus": {
@@ -72,7 +72,7 @@
         "workspaceFolderBasename": "echo ${workspaceFolderBasename}",
         "homedir": "echo ${homedir}",
         "tmpdir": "echo ${tmpdir}",
-        "env": "echo ${env:PATH}",
+        "env": "echo '${env:PATH}'",
         "config": "echo ${config:editor.fontSize}",
         "command": "${command:workbench.action.openRecent}"
     },
