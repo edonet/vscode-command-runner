@@ -192,7 +192,7 @@ function variableAccessor() {
             return env[name.toUpperCase()] || '';
         },
         formatPath(str) {
-            return str.replace(/\\/g, '\\').replace(/\s/g, '\\ ');
+            return str.replace(/\s/g, '\\ ');
         }
     };
 }
