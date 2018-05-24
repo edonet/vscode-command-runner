@@ -75,11 +75,15 @@ class Accessor {
 
             // 获取配置
             this.workspaceFolders.forEach(folder => {
-                let dir = path.join(folder.uri.fsPath, 'package.json'),
-                    settings = require(dir);
+                try {
+                    let dir = path.join(folder.uri.fsPath, 'package.json'),
+                        settings = require(dir);
 
-                // 合并配置
-                config = Object.assign({}, config, name ? settings[name] : settings);
+                    // 合并配置
+                    config = Object.assign({}, config, name ? settings[name] : settings);
+                } catch (err) {
+                    // do nothings;
+                }
             });
 
             // 返回配置
