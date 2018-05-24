@@ -26,14 +26,17 @@ const
 function activate(context) {
     let accessor = new Accessor(),
         command = new Command(accessor),
-        commandRunner = new CommandRunner(command);
+        commandRunner = new CommandRunner();
 
     // 添加事件监听
     context.subscriptions.push(commandRunner);
 
     // 注册【命令运行】命令
     context.subscriptions.push(
-        vscode.commands.registerCommand('command-runner.run', () => commandRunner.run())
+        vscode.commands.registerCommand(
+            'command-runner.run',
+            () => command.showPick().then(cmd => commandRunner.execute(cmd))
+        )
     );
 }
 

@@ -29,7 +29,7 @@ class Command {
     }
 
     /* 选择命令 */
-    async pick() {
+    async showPick() {
         let commands = this.getCommands(),
             keys = Object.keys(commands);
 

@@ -23,30 +23,25 @@ const vscode = require('vscode');
 class CommandRunner {
 
     /* 初始化对象 */
-    constructor(command) {
-        this.$$command = command;
+    constructor() {
         this.$$terminal = null;
         this.$$disposable = this.subscribe();
     }
 
     /* 绑定事件 */
     subscribe() {
-        let subscriptions = [];
+        let subscriptions = [],
+            listener = terminal => {
+                if (terminal === this.$$terminal) {
+                    this.$$terminal = null;
+                }
+            };
 
         // 监听终端关闭事件
-        vscode.window.onDidCloseTerminal(terminal => {
-            if (terminal === this.$$terminal) {
-                this.$$terminal = null;
-            }
-        }, this, subscriptions);
+        vscode.window.onDidCloseTerminal(listener, this, subscriptions);
 
         // 返回监听器
         return vscode.Disposable.from(subscriptions[0]);
-    }
-
-    /* 执行命令 */
-    async run() {
-        await this.execute(await this.$$command.pick());
     }
 
     /* 执行命令 */
