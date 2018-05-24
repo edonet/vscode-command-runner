@@ -100,7 +100,7 @@ class Accessor {
     }
 
     /* 获取环境变量 */
-    createEnvVariable(name) {
+    createEnvVariable() {
         let env = process.env,
             mapper = {};
 
@@ -125,7 +125,7 @@ class Accessor {
 
         // 获取文件信息
         if (folder) {
-            let dir = folder.uri ? folder.uri.fsPath : file;
+            let dir = folder.uri ? folder.uri.fsPath : folder;
 
             switch (name) {
                 case 'workspaceFolder':
