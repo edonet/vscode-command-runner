@@ -2,7 +2,7 @@
     "name": "vscode-command-runner",
     "displayName": "Command Runner",
     "description": "vscode custom shell command runner",
-    "version": "0.0.104",
+    "version": "0.0.105",
     "icon": "images/logo.png",
     "publisher": "edonet",
     "engines": {

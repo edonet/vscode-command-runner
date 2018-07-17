@@ -33,8 +33,15 @@ class Command {
         let commands = this.getCommands(),
             keys = Object.keys(commands);
 
-        // 选择
+        // 选择执行命令
         if (keys.length) {
+
+            // 过滤默认命令
+            if (keys.length > 1) {
+                keys = keys.filter(key => key !== 'echo');
+            }
+
+            // 显示选择列表
             try {
                 let key = await vscode.window.showQuickPick(
                         keys, { placeHolder: 'Type or select command to run' }
