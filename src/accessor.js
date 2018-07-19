@@ -43,6 +43,7 @@ class Accessor {
         this.workspaceFolders = workspace.workspaceFolders || [];
         this.activeEditor = vscode.window.activeTextEditor || null;
         this.activeFile = this.activeEditor && this.activeEditor.document;
+        this.selections = this.activeEditor && this.activeEditor.selections;
 
         // 获取当前工作目录
         this.workspaceFolder = (
@@ -116,6 +117,7 @@ class Accessor {
         return name ? (
             this.getFileInfomation(name) ||
             this.getWorkspaceInfomation(name) ||
+            this.getSectionInfomation(name) ||
             this.getOSInfomation(name)
         ) : '';
     }
@@ -170,6 +172,37 @@ class Accessor {
         return '';
     }
 
+    /* 获取选择的内容 */
+    getSectionInfomation(name, selections = this.selections) {
+
+        // 获取选择的内容
+        if (selections && selections.length) {
+            selections = selections.sort(
+                (sl1, sl2) => sl1.active.line > sl2.active.line
+            );
+
+            switch (name) {
+                case 'lineNumber':
+                    return selections[0].active.line + 1;
+                case 'lineNumbers':
+                    return selections.map(sl => sl.active.line + 1).join(',');
+                case 'selectedPosition':
+                    return [selections[0].active.line + 1, selections[0].active.character].join(',');
+                case 'selectedPositionList':
+                    return selections.map(sl => [sl.active.line + 1, sl.active.character].join(',')).join(' ');
+                case 'selectedText':
+                    return this.getSelectContent(selections, 1).join(' ');
+                case 'selectedTextList':
+                    return this.getSelectContent(selections).join(' ');
+                default:
+                    return '';
+            }
+        }
+
+        // 返回空
+        return '';
+    }
+
     /* 获取系统信息 */
     getOSInfomation(name) {
         switch (name) {
@@ -180,6 +213,23 @@ class Accessor {
             default:
                 return '';
         }
+    }
+
+    /* 获取选中的内容 */
+    getSelectContent(selections, max = 0) {
+        let res = [];
+
+        // 获取内容
+        for (let sl of selections) {
+            if (max && res.length >= max) {
+                break;
+            }
+
+            // 判断是否为空
+            sl.isEmpty || res.push(this.activeFile.getText(sl));
+        }
+
+        return res;
     }
 
     /* 格式化字符串 */

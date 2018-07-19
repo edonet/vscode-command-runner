@@ -37,6 +37,12 @@ or in node module package.json
 * `${fileBasenameNoExtension}`: activated file basename with no extension;
 * `${fileDirname}`: activated file dirname;
 * `${fileExtname}`: activated file extension;
+* `${lineNumber}`: the first selected line number;
+* `${lineNumbers}`: the all selected line number, eg. `41,46,80`;
+* `${selectedText}`: the first selected text;
+* `${selectedTextList}`: the all selected text list, eg. `sl1 sl2`;
+* `${selectedPosition}`: the selected position list, eg. `21,6`;
+* `${selectedPositionList}`: the all selected position list, eg. `45,6 80,18 82,5`;
 * `${relativeFile}`: activated file relative path;
 * `${workspaceFolder}`: activated workspace folder path;
 * `${workspaceFolderBasename}`: activated workspace folder basename;
