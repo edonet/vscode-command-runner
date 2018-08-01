@@ -2,17 +2,18 @@
     "name": "vscode-command-runner",
     "displayName": "Command Runner",
     "description": "vscode custom shell command runner",
-    "version": "0.0.106",
+    "version": "0.0.107",
     "icon": "images/logo.png",
     "publisher": "edonet",
     "engines": {
-        "vscode": "^1.20.0"
+        "vscode": "^1.10.0"
     },
     "categories": [
         "Other"
     ],
     "activationEvents": [
-        "onCommand:command-runner.run"
+        "onCommand:command-runner.run",
+        "onCommand:command-runner.runInTerminal"
     ],
     "main": "./src/extension",
     "contributes": {
@@ -20,6 +21,10 @@
             {
                 "command": "command-runner.run",
                 "title": "Run Command"
+            },
+            {
+                "command": "command-runner.runInTerminal",
+                "title": "Run In Terminal"
             }
         ],
         "configuration": {
@@ -47,6 +52,11 @@
                 "command": "command-runner.run",
                 "key": "ctrl+shift+r",
                 "mac": "ctrl+shift+r"
+            },
+            {
+                "command": "command-runner.runInTerminal",
+                "key": "ctrl+alt+r",
+                "mac": "ctrl+alt+r"
             }
         ],
         "menus": {
@@ -54,6 +64,11 @@
                 {
                     "when": "!inOutput && config.command-runner.showRunCommandInEditorContextMenu",
                     "command": "command-runner.run",
+                    "group": "navigation"
+                },
+                {
+                    "when": "editorHasSelection && !inOutput && config.command-runner.showRunCommandInEditorContextMenu",
+                    "command": "command-runner.runInTerminal",
                     "group": "navigation"
                 }
             ]

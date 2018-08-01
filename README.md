@@ -4,7 +4,8 @@ Run custom shell command defined in vs code configuration and node module packag
 
 ## Features
 
-Run custom shell command
+* Run custom shell command
+* Run selected content as shell command
 
 ## Extension Settings
 
@@ -54,6 +55,8 @@ or in node module package.json
 
 ## Usages
 
-* use shortcut `Ctrl+Shift+R`
-* or press `F1` and then select/type `Run Command`,
-* or right click the Text Editor and then click `Run Command` in editor context menu
+* use shortcut `Ctrl+Shift+R` to select custom command
+* use shortcut `Ctrl+Alt+R` to run selected content as shell command
+* or press `F1` and then select/type `Run Command` or `Run In Terminal`,
+* or right click the Text Editor and then click `Run Command` to select custom command in editor context menu
+* or right click the Text Editor and then click `Run In Terminal` to run selected content as shell command in editor context menu

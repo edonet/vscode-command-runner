@@ -31,11 +31,28 @@ function activate(context) {
     // 添加事件监听
     context.subscriptions.push(commandRunner);
 
-    // 注册【命令运行】命令
+    // 注册【运行】命令
     context.subscriptions.push(
         vscode.commands.registerCommand(
             'command-runner.run',
             () => command.showPick().then(cmd => commandRunner.execute(cmd))
+        )
+    );
+
+    // 注册【在终端运行】命令
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'command-runner.runInTerminal',
+            () => {
+
+                // 刷新存取器
+                accessor.refresh();
+
+                // 运行命令
+                commandRunner.execute(
+                    command.resolve(accessor.getSectionInfomation('selectedText'))
+                );
+            }
         )
     );
 }
