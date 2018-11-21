@@ -55,6 +55,11 @@ class Command {
         }
     }
 
+    /* 解析指定命令 */
+    pick(command) {
+        return this.resolve(this.getCommands()[command] || command);
+    }
+
     /* 获取命令 */
     getCommands() {
 
