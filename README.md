@@ -32,7 +32,7 @@ or in node module package.json
 ```
 
 ## Key Binding
-You can bind custom keys to the command which defined in configuration
+You can bind custom keys for the command which defined in configuration
 ```json
 {
     "key": "ctrl+alt+1",
