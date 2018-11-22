@@ -6,7 +6,7 @@
     "icon": "images/logo.png",
     "publisher": "edonet",
     "engines": {
-        "vscode": "^1.10.0"
+        "vscode": "^1.20.0"
     },
     "categories": [
         "Other"
