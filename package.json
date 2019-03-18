@@ -1,118 +1,123 @@
 {
-    "name": "vscode-command-runner",
-    "displayName": "Command Runner",
-    "description": "vscode custom shell command runner",
-    "version": "0.0.108",
-    "icon": "images/logo.png",
-    "publisher": "edonet",
-    "engines": {
-        "vscode": "^1.20.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onCommand:command-runner.run",
-        "onCommand:command-runner.runInTerminal"
-    ],
-    "main": "./src/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "command-runner.run",
-                "title": "Run Command"
-            },
-            {
-                "command": "command-runner.runInTerminal",
-                "title": "Run In Terminal"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "Run Command Configuration",
-            "properties": {
-                "command-runner.commands": {
-                    "type": "object",
-                    "default": {
-                        "echo": "echo ${file}"
-                    },
-                    "description": "Set the custom command to run.",
-                    "scope": "resource"
-                },
-                "command-runner.showRunCommandInEditorContextMenu": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Show 'Run Command' in editor context menu",
-                    "scope": "resource"
-                }
-            }
-        },
-        "keybindings": [
-            {
-                "command": "command-runner.run",
-                "key": "ctrl+shift+r",
-                "mac": "ctrl+shift+r"
-            },
-            {
-                "command": "command-runner.runInTerminal",
-                "key": "ctrl+alt+r",
-                "mac": "ctrl+alt+r"
-            }
-        ],
-        "menus": {
-            "editor/context": [
-                {
-                    "when": "!inOutput && config.command-runner.showRunCommandInEditorContextMenu",
-                    "command": "command-runner.run",
-                    "group": "navigation"
-                },
-                {
-                    "when": "editorHasSelection && !inOutput && config.command-runner.showRunCommandInEditorContextMenu",
-                    "command": "command-runner.runInTerminal",
-                    "group": "navigation"
-                }
-            ]
-        }
-    },
-    "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "commands": {
-        "file": "cat ${file}",
-        "fileBasename": "echo ${fileBasename}",
-        "fileBasenameNoExtension": "echo ${fileBasenameNoExtension}",
-        "fileDirname": "echo ${fileDirname}",
-        "fileExtname": "echo ${fileExtname}",
-        "relativeFile": "echo ${relativeFile}",
-        "lineNumber": "echo ${lineNumber}",
-        "lineNumbers": "echo ${lineNumbers}",
-        "selectedPosition": "echo ${selectedPosition}",
-        "selectedPositionList": "echo ${selectedPositionList}",
-        "selectedText": "echo ${selectedText}",
-        "selectedTextList": "echo ${selectedTextList}",
-        "workspaceFolder": "echo ${workspaceFolder}",
-        "workspaceFolderBasename": "echo ${workspaceFolderBasename}",
-        "homedir": "echo ${homedir}",
-        "tmpdir": "echo ${tmpdir}",
-        "env": "echo '${env:PATH}'",
-        "config": "echo ${config:editor.fontSize}",
-        "command": "${command:workbench.action.openRecent}"
-    },
-    "bugs": {
-        "url": "https://github.com/edonet/vscode-command-runner/issues",
-        "email": "edonet@163.com"
-    },
-    "homepage": "https://github.com/edonet/vscode-command-runner/blob/master/README.md",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/edonet/vscode-command-runner.git"
-    },
-    "devDependencies": {
-        "@types/mocha": "^5.2.5",
-        "@types/node": "^10.12.10",
-        "eslint": "^5.9.0",
-        "typescript": "^3.1.6",
-        "vscode": "^1.1.21"
-    }
+	"name": "vscode-command-runner",
+	"displayName": "Command Runner",
+	"description": "vscode custom shell command runner",
+	"version": "0.0.108",
+	"icon": "images/logo.png",
+	"publisher": "edonet",
+	"engines": {
+		"vscode": "^1.20.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:command-runner.run",
+		"onCommand:command-runner.runInTerminal"
+	],
+	"main": "./src/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "command-runner.run",
+				"title": "Run Command"
+			},
+			{
+				"command": "command-runner.runInTerminal",
+				"title": "Run In Terminal"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Run Command Configuration",
+			"properties": {
+				"command-runner.commands": {
+					"type": "object",
+					"default": {
+						"echo": "echo ${file}"
+					},
+					"description": "Set the custom command to run.",
+					"scope": "resource"
+				},
+				"command-runner.showRunCommandInEditorContextMenu": {
+					"type": "boolean",
+					"default": true,
+					"description": "Show 'Run Command' in editor context menu",
+					"scope": "resource"
+				}
+			}
+		},
+		"keybindings": [
+			{
+				"command": "command-runner.run",
+				"key": "ctrl+shift+r",
+				"mac": "ctrl+shift+r"
+			},
+			{
+				"command": "command-runner.runInTerminal",
+				"key": "ctrl+alt+r",
+				"mac": "ctrl+alt+r"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "!inOutput && config.command-runner.showRunCommandInEditorContextMenu",
+					"command": "command-runner.run",
+					"group": "navigation"
+				},
+				{
+					"when": "editorHasSelection && !inOutput && config.command-runner.showRunCommandInEditorContextMenu",
+					"command": "command-runner.runInTerminal",
+					"group": "navigation"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"commands": {
+		"file": "cat ${file}",
+		"fileBasename": "echo ${fileBasename}",
+		"fileBasenameNoExtension": "echo ${fileBasenameNoExtension}",
+		"fileDirname": "echo ${fileDirname}",
+		"fileExtname": "echo ${fileExtname}",
+		"relativeFile": "echo ${relativeFile}",
+		"lineNumber": "echo ${lineNumber}",
+		"lineNumbers": "echo ${lineNumbers}",
+		"selectedPosition": "echo ${selectedPosition}",
+		"selectedPositionList": "echo ${selectedPositionList}",
+		"selectedText": "echo ${selectedText}",
+		"selectedTextList": "echo ${selectedTextList}",
+		"workspaceFolder": "echo ${workspaceFolder}",
+		"workspaceFolderBasename": "echo ${workspaceFolderBasename}",
+		"homedir": "echo ${homedir}",
+		"tmpdir": "echo ${tmpdir}",
+		"env": "echo '${env:PATH}'",
+		"config": "echo ${config:editor.fontSize}",
+		"command": "${command:workbench.action.openRecent}"
+	},
+	"bugs": {
+		"url": "https://github.com/edonet/vscode-command-runner/issues",
+		"email": "edonet@163.com"
+	},
+	"homepage": "https://github.com/edonet/vscode-command-runner/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/edonet/vscode-command-runner.git"
+	},
+	"devDependencies": {
+		"@types/mocha": "^5.2.5",
+		"@types/node": "^10.12.10",
+		"eslint": "^5.9.0",
+		"typescript": "^3.1.6",
+		"vscode": "^1.1.21"
+	},
+	"__metadata": {
+		"id": "c4acb5b7-168f-4561-86ef-79352610787e",
+		"publisherDisplayName": "edonet",
+		"publisherId": "56102209-e938-4a27-8dad-976ac027ac55"
+	}
 }
