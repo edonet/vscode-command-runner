@@ -47,6 +47,7 @@ class CommandRunner {
     /* 执行命令 */
     async execute(command, options = {}) {
         if (command) {
+            let hasTerminal = vscode.window.terminals.length;
 
             // 创建终端
             this.createTerminal(options);
@@ -55,7 +56,9 @@ class CommandRunner {
             this.$$terminal.show(true);
 
             // 清空终端
-            await vscode.commands.executeCommand('workbench.action.terminal.clear');
+            if (hasTerminal) {
+                await vscode.commands.executeCommand('workbench.action.terminal.clear');
+            }
 
             // 执行命令
             this.$$terminal.sendText(command);
