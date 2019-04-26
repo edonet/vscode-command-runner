@@ -2,7 +2,7 @@
 	"name": "vscode-command-runner",
 	"displayName": "Command Runner",
 	"description": "vscode custom shell command runner",
-	"version": "0.0.108",
+	"version": "0.0.109",
 	"icon": "images/logo.png",
 	"publisher": "edonet",
 	"engines": {
@@ -109,11 +109,11 @@
 		"url": "https://github.com/edonet/vscode-command-runner.git"
 	},
 	"devDependencies": {
-		"@types/mocha": "^5.2.5",
-		"@types/node": "^10.12.10",
-		"eslint": "^5.9.0",
-		"typescript": "^3.1.6",
-		"vscode": "^1.1.21"
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^11.13.7",
+		"eslint": "^5.16.0",
+		"typescript": "^3.4.5",
+		"vscode": "^1.1.33"
 	},
 	"__metadata": {
 		"id": "c4acb5b7-168f-4561-86ef-79352610787e",

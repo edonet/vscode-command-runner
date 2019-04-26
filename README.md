@@ -41,6 +41,30 @@ You can bind custom keys for the command which defined in configuration
 }
 ```
 
+## Terminal Options
+You can customize the terminal for the command
+```json
+{
+    "key": "ctrl+alt+1",
+    "command": "command-runner.run",
+    "args": { "terminal": "terminalName" }
+}
+```
+or
+```json
+{
+    "key": "ctrl+alt+1",
+    "command": "command-runner.run",
+    "args": {
+        "terminal": {
+            "name": "terminalName",
+            "cwd": "path/to/runCommand",
+            "shellArgs": []
+        }
+    }
+}
+```
+
 ## Predefined Variable
 
 * `${file}`: activated file path;

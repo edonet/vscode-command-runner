@@ -35,15 +35,15 @@ function activate(context) {
     context.subscriptions.push(
         vscode.commands.registerCommand(
             'command-runner.run',
-            args => {
+            (args = {}) => {
 
                 // 执行指定命令
-                if (args && (args.command || args.cmd)) {
-                    return commandRunner.execute(command.pick(args.command || args.cmd));
+                if (args.command || args.cmd) {
+                    return commandRunner.execute(command.pick(args.command || args.cmd), args.terminal);
                 }
 
                 // 选择命令
-                command.showPick().then(cmd => commandRunner.execute(cmd));
+                command.showPick().then(cmd => commandRunner.execute(cmd, args.terminal));
             }
         )
     );
@@ -52,15 +52,14 @@ function activate(context) {
     context.subscriptions.push(
         vscode.commands.registerCommand(
             'command-runner.runInTerminal',
-            () => {
+            (args = {}) => {
+                let cmd = command.resolve(accessor.getSectionInfomation('selectedText'));
 
                 // 刷新存取器
                 accessor.refresh();
 
                 // 运行命令
-                commandRunner.execute(
-                    command.resolve(accessor.getSectionInfomation('selectedText'))
-                );
+                commandRunner.execute(cmd, args.terminal);
             }
         )
     );
