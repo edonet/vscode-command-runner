@@ -234,9 +234,7 @@ class Accessor {
 
     /* 格式化字符串 */
     formatPath(str) {
-        return (
-            str && typeof str === 'string' ? str.replace(/\s/g, '\\ ') : str
-        );
+        return str;
     }
 }
 
