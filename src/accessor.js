@@ -47,8 +47,8 @@ class Accessor {
 
         // 获取当前工作目录
         this.workspaceFolder = (
-            this.activeFile ?
-            workspace.getWorkspaceFolder(this.activeFile.uri) :
+            this.activeFile &&
+            workspace.getWorkspaceFolder(this.activeFile.uri) ||
             this.workspaceFolders[0]
         );
 

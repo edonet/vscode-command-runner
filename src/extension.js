@@ -37,6 +37,9 @@ function activate(context) {
             'command-runner.run',
             (args = {}) => {
 
+                // 刷新存取器
+                accessor.refresh();
+
                 // 执行指定命令
                 if (args.command || args.cmd) {
                     return commandRunner.execute(command.pick(args.command || args.cmd), args.terminal);
@@ -53,13 +56,13 @@ function activate(context) {
         vscode.commands.registerCommand(
             'command-runner.runInTerminal',
             (args = {}) => {
-                let cmd = command.resolve(accessor.getSectionInfomation('selectedText'));
+                let cmd = accessor.getSectionInfomation('selectedText');
 
                 // 刷新存取器
                 accessor.refresh();
 
                 // 运行命令
-                commandRunner.execute(cmd, args.terminal);
+                commandRunner.execute(command.resolve(cmd), args.terminal);
             }
         )
     );
