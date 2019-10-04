@@ -53,7 +53,9 @@ class CommandRunner {
             this.createTerminal(options);
 
             // 显示终端
-            this.$$terminal.show(true);
+            if (typeof options === 'object' && options !== null && !options.hideFromUser) {
+                this.$$terminal.show(true);
+            }
 
             // 清空终端
             if (hasTerminal) {
