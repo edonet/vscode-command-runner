@@ -49,11 +49,22 @@ class CommandRunner {
         if (command) {
             let hasTerminal = vscode.window.terminals.length;
 
+			if( ! hasTerminal )
+			{
+                vscode.window.createTerminal({ name: 'Command' });
+			}
+
+			if (vscode.window.activeTerminal) {
+				vscode.window.activeTerminal.show();
+				vscode.window.activeTerminal.sendText(command);
+			}
+
+
             // 创建终端
-            this.createTerminal(options);
+            //this.createTerminal(options);
 
             // 显示终端
-            if (typeof options === 'object' && options !== null && !options.hideFromUser) {
+            /*if (typeof options === 'object' && options !== null && !options.hideFromUser) {
                 this.$$terminal.show(true);
             }
 
@@ -63,7 +74,7 @@ class CommandRunner {
             }
 
             // 执行命令
-            this.$$terminal.sendText(command);
+            this.$$terminal.sendText(command);*/
 
             // 输出命令信息
             console.log('--> Run Command:', command);
@@ -71,7 +82,7 @@ class CommandRunner {
     }
 
     /* 创建终端 */
-    createTerminal(options) {
+    /*createTerminal(options) {
 
         // 新建终端
         if (options === true) {
@@ -97,7 +108,7 @@ class CommandRunner {
                 this.$$terminal = vscode.window.createTerminal(options);
             }
         }
-    }
+    }*/
 
     /* 销毁对象 */
     dispose() {
