@@ -6,7 +6,7 @@
 	"icon": "images/logo.png",
 	"publisher": "edonet",
 	"engines": {
-		"vscode": "^1.20.0"
+		"vscode": "^1.45.0"
 	},
 	"categories": [
 		"Other"
@@ -15,7 +15,7 @@
 		"onCommand:command-runner.run",
 		"onCommand:command-runner.runInTerminal"
 	],
-	"main": "./src/extension",
+	"main": "./dist/extension",
 	"contributes": {
 		"commands": [
 			{
@@ -31,6 +31,12 @@
 			"type": "object",
 			"title": "Run Command Configuration",
 			"properties": {
+                "command-runner.terminal": {
+                    "type": "string",
+					"default": "commandRunner",
+					"description": "Specifies the terminal to execute the command.",
+					"scope": "resource"
+                },
 				"command-runner.commands": {
 					"type": "object",
 					"default": {
@@ -44,7 +50,13 @@
 					"default": true,
 					"description": "Show 'Run Command' in editor context menu",
 					"scope": "resource"
-				}
+                },
+                "command-runner.autoClear": {
+                    "type": "boolean",
+					"default": false,
+					"description": "Clear the content of terminal before execute the command.",
+					"scope": "resource"
+                }
 			}
 		},
 		"keybindings": [
@@ -75,9 +87,12 @@
 		}
 	},
 	"scripts": {
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "node ./node_modules/vscode/bin/test"
-	},
+        "vscode:prepublish": "yarn run compile",
+        "compile": "tsc -p ./",
+        "lint": "eslint src --ext ts",
+        "watch": "tsc -watch -p ./",
+        "symlink": "node scripts/symlink.js"
+    },
 	"commands": {
 		"file": "cat ${file}",
 		"fileBasename": "echo ${fileBasename}",
@@ -108,13 +123,14 @@
 		"type": "git",
 		"url": "https://github.com/edonet/vscode-command-runner.git"
 	},
-	"devDependencies": {
-		"@types/mocha": "^5.2.6",
-		"@types/node": "^11.13.7",
-		"eslint": "^5.16.0",
-		"typescript": "^3.4.5",
-		"vscode": "^1.1.33"
-	},
+    "devDependencies": {
+        "@types/node": "^13.11.0",
+        "@types/vscode": "^1.45.0",
+        "@typescript-eslint/eslint-plugin": "^2.30.0",
+        "@typescript-eslint/parser": "^2.30.0",
+        "eslint": "^6.8.0",
+        "typescript": "^3.8.3"
+    },
 	"__metadata": {
 		"id": "c4acb5b7-168f-4561-86ef-79352610787e",
 		"publisherDisplayName": "edonet",
