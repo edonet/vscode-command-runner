@@ -61,6 +61,12 @@ typings/
 # next.js build output
 .next
 
+# data mock
+.mock
+
+# backup
+*.bak
+
 # MacOS
 .DS_Store
 

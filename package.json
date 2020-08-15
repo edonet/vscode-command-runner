@@ -31,10 +31,42 @@
 			"type": "object",
 			"title": "Run Command Configuration",
 			"properties": {
-                "command-runner.terminal": {
+                "command-runner.terminal.name": {
                     "type": "string",
-					"default": "commandRunner",
-					"description": "Specifies the terminal to execute the command.",
+					"default": "",
+					"description": "Specifies the terminal name to execute the command.",
+                    "scope": "resource"
+                },
+                "command-runner.terminal.cwd": {
+                    "type": "string",
+					"description": "A path or Uri for the current working directory to be used for the terminal.",
+                    "scope": "resource"
+                },
+                "command-runner.terminal.env": {
+                    "type": "string",
+					"description": "Object with environment variables that will be added to the VS Code process.",
+                    "scope": "resource"
+                },
+                "command-runner.terminal.shellPath": {
+                    "type": "string",
+					"description": "A path to a custom shell executable to be used in the terminal.",
+                    "scope": "resource"
+                },
+                "command-runner.terminal.shellArgs": {
+                    "type": ["string", "array"],
+					"description": "Args for the custom shell executable. A string can be used on Windows only which allows specifying shell args in command-line format.",
+                    "scope": "resource"
+                },
+                "command-runner.terminal.autoClear": {
+                    "type": "boolean",
+					"default": false,
+					"description": "Clear the content of terminal before execute the command.",
+					"scope": "resource"
+                },
+                "command-runner.terminal.autoFocus": {
+                    "type": "boolean",
+					"default": true,
+					"description": "Focus the terminal when execute the command.",
 					"scope": "resource"
                 },
 				"command-runner.commands": {
@@ -49,12 +81,6 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Show 'Run Command' in editor context menu",
-					"scope": "resource"
-                },
-                "command-runner.autoClear": {
-                    "type": "boolean",
-					"default": false,
-					"description": "Clear the content of terminal before execute the command.",
 					"scope": "resource"
                 }
 			}
