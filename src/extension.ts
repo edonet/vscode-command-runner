@@ -46,31 +46,28 @@ export function activate(context: vscode.ExtensionContext): void {
                 options.terminal = { name: options.terminal };
             }
 
-            console.log('args', options);
-
             // 执行命令
-            command.execute(cmd, options.terminal);
+            if (cmd) {
+                return command.execute(cmd, options.terminal);
+            }
+
+            // 选择命令并执行
+            command.pick();
         })
     );
 
     // 注册【在终端运行】命令
     context.subscriptions.push(
-        vscode.commands.registerCommand('command-runner.runInTerminal', (options: CommandOptions = {}) => {
-            const cmd = '';
+        vscode.commands.registerCommand('command-runner.runInTerminal', ({ terminal }: CommandOptions = {}) => {
+            const command = new Command();
 
-            if (cmd) {
-                const command = new Command();
-
-                // 兼容终端名参数
-                if (typeof options.terminal === 'string') {
-                    options.terminal = { name: options.terminal };
-                }
-
-                console.log('args', options);
-
-                // 执行命令
-                command.execute(cmd, options.terminal);
+            // 兼容终端名参数
+            if (typeof terminal === 'string') {
+                terminal = { name: terminal };
             }
+
+            // 执行命令
+            command.executeSelectText(terminal);
         })
     );
 }

@@ -13,7 +13,7 @@
  *****************************************
  */
 import * as vscode from 'vscode';
-
+import Accessor, { VariableScope } from './Accessor';
 
 /**
  *****************************************
@@ -28,52 +28,128 @@ export type TerminalOptions = Partial<vscode.TerminalOptions> & {
 
 /**
  *****************************************
+ * 创建终端
+ *****************************************
+ */
+function createTerminal(options: vscode.TerminalOptions) {
+    const { window } = vscode;
+    const { name } = options;
+
+    // 指定终端
+    if (name && typeof name === 'string') {
+        return (
+            window.terminals.find(term => term.name === name) ||
+            window.createTerminal(options)
+        );
+    }
+
+    // 使用默认终端
+    return window.activeTerminal || window.createTerminal(options);
+}
+
+
+/**
+ *****************************************
  * 命令行工具
  *****************************************
  */
 export default class Command {
 
-    /* 执行命令 */
-    async execute(cmd: string, options?: TerminalOptions) {
-        if (cmd) {
-            const { autoClear, autoFocus, ...terminalOptions }: TerminalOptions = {
-                ...vscode.workspace.getConfiguration().get('command-runner.terminal'),
-                ...options,
-                hideFromUser: false,
-            };
+    /* 变量配置项 */
+    private $regexp = /\$\{(.*?)\}/g;
 
-            // 创建终端
-            const terminal = this.createTerminal(terminalOptions);
+    /* 存取器 */
+    private $accessor = new Accessor();
 
-            // 显示终端
-            if (autoFocus && terminal !== vscode.window.activeTerminal) {
-                terminal.show();
+    /* 解析命令 */
+    resolve(cmd: string): string {
+        return cmd && cmd.replace(this.$regexp, (str: string, $1: string): string => {
+            let [variable, args = ''] = $1.split(':');
+
+            // 去除空白
+            variable = variable.trim();
+            args = args.trim();
+
+            // 解析变量
+            switch (variable) {
+                case 'config':
+                    return args && this.$accessor.config(args) as string;
+                case 'env':
+                    return args && this.$accessor.env(args);
+                case 'command':
+                    args && vscode.commands.executeCommand(args);
+                    return '';
+                default:
+                    return this.$accessor.variable(variable as VariableScope);
             }
+        });
+    }
 
-            // 清空终端
-            if (autoClear) {
-                await vscode.commands.executeCommand('workbench.action.terminal.clear');
+    /* 选择命令并执行 */
+    async pick(options?: TerminalOptions) {
+        const commands = this.$accessor.commands();
+        const keys = Object.keys(commands).filter(
+            key => key !== 'echo' || commands[key] !== 'echo \'this is a test command: ${file}\''
+        );
+
+        // 命令列表为空
+        if (!keys.length) {
+            return;
+        }
+
+        // 显示选择列表
+        try {
+            const cmd = await vscode.window.showQuickPick(
+                keys, { placeHolder: 'Type or select command to run' }
+            );
+
+            // 执行命令
+            if (cmd) {
+                await this.execute(cmd, options);
             }
-
-            // 写入命令
-            terminal.sendText(cmd);
+        } catch (err) {
+            // do nothings;
         }
     }
 
-    /* 创建终端 */
-    createTerminal(options: vscode.TerminalOptions) {
-        const { window } = vscode;
-        const { name } = options;
+    /* 执行命令 */
+    async execute(name: string, options?: TerminalOptions) {
+        const { autoClear, autoFocus, ...terminalOptions }: TerminalOptions = {
+            ...this.$accessor.config('command-runner.terminal'),
+            ...options,
+            hideFromUser: false,
+        };
 
-        // 指定终端
-        if (name && typeof name === 'string') {
-            return (
-                window.terminals.find(term => term.name === name) ||
-                window.createTerminal(options)
-            );
+        // 创建终端
+        const terminal = createTerminal(terminalOptions);
+
+        // 显示终端
+        if (autoFocus && terminal !== vscode.window.activeTerminal) {
+            terminal.show();
         }
 
-        // 使用默认终端
-        return window.activeTerminal || window.createTerminal(options);
+        // 清空终端
+        if (autoClear) {
+            await vscode.commands.executeCommand('workbench.action.terminal.clear');
+        }
+
+        // 获取命令
+        const command = this.$accessor.command(name);
+
+        // 写入命令
+        terminal.sendText(this.resolve(command));
+
+        // 输出命令信息
+        console.log('--> Run Command:', command);
+    }
+
+    /* 执行选择的文字 */
+    async executeSelectText(options?: TerminalOptions) {
+        const cmd = this.$accessor.variable('selectedTextSection');
+
+        // 执行命令
+        if (cmd) {
+            await this.execute(cmd, options);
+        }
     }
 }

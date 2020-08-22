@@ -72,7 +72,7 @@
 				"command-runner.commands": {
 					"type": "object",
 					"default": {
-						"echo": "echo ${file}"
+						"echo": "echo 'this is a test command: ${file}'"
 					},
 					"description": "Set the custom command to run.",
 					"scope": "resource"
@@ -81,6 +81,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Show 'Run Command' in editor context menu",
+					"scope": "resource"
+                },
+				"command-runner.showRunCommandInExplorerContextMenu": {
+					"type": "boolean",
+					"default": true,
+					"description": "Show 'Run Command' in explorer context menu",
 					"scope": "resource"
                 }
 			}
@@ -109,7 +115,14 @@
 					"command": "command-runner.runInTerminal",
 					"group": "navigation"
 				}
-			]
+            ],
+            "explorer/context": [
+                {
+					"when": "config.command-runner.showRunCommandInExplorerContextMenu",
+					"command": "command-runner.run",
+					"group": "navigation"
+				}
+            ]
 		}
 	},
 	"scripts": {
@@ -132,6 +145,7 @@
 		"selectedPositionList": "echo ${selectedPositionList}",
 		"selectedText": "echo ${selectedText}",
 		"selectedTextList": "echo ${selectedTextList}",
+		"selectedTextSection": "echo ${selectedTextSection}",
 		"workspaceFolder": "echo ${workspaceFolder}",
 		"workspaceFolderBasename": "echo ${workspaceFolderBasename}",
 		"homedir": "echo ${homedir}",
