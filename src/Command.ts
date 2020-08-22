@@ -113,7 +113,7 @@ export default class Command {
 
             // 执行命令
             if (cmd) {
-                await this.execute(cmd, options);
+                await this.execute(commands[cmd], options);
             }
         } catch (err) {
             // do nothings;
@@ -121,7 +121,7 @@ export default class Command {
     }
 
     /* 执行命令 */
-    async execute(name: string, options?: TerminalOptions) {
+    async execute(cmd: string, options?: TerminalOptions) {
         const { autoClear, autoFocus, ...terminalOptions }: TerminalOptions = {
             ...this.$accessor.config('command-runner.terminal'),
             ...options,
@@ -142,7 +142,7 @@ export default class Command {
         }
 
         // 获取命令
-        const command = this.$accessor.command(name) + ' ' + this.$files.join(' ');
+        const command = cmd + ' ' + this.$files.join(' ');
 
         // 写入命令
         terminal.sendText(this.resolve(command));
@@ -153,11 +153,14 @@ export default class Command {
 
     /* 执行选择的文字 */
     async executeSelectText(options?: TerminalOptions) {
-        const cmd = this.$accessor.variable('selectedTextSection');
+        const selected = this.$accessor.variable('selectedTextSection');
+        const cmds = selected.split('\n');
+
+        console.log(cmds);
 
         // 执行命令
-        if (cmd) {
-            await this.execute(cmd, options);
+        for (const cmd of cmds) {
+            await this.execute(cmd.trim(), options);
         }
     }
 }
