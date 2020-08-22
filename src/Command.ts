@@ -55,11 +55,19 @@ function createTerminal(options: vscode.TerminalOptions) {
  */
 export default class Command {
 
+    /* 选中的文件列表 */
+    private $files: string[] = [];
+
     /* 变量配置项 */
     private $regexp = /\$\{(.*?)\}/g;
 
     /* 存取器 */
     private $accessor = new Accessor();
+
+    /* 添加文件 */
+    addFile(file?: string) {
+        file && this.$files.push(JSON.stringify(file));
+    }
 
     /* 解析命令 */
     resolve(cmd: string): string {
@@ -134,7 +142,7 @@ export default class Command {
         }
 
         // 获取命令
-        const command = this.$accessor.command(name);
+        const command = this.$accessor.command(name) + ' ' + this.$files.join(' ');
 
         // 写入命令
         terminal.sendText(this.resolve(command));

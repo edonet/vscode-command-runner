@@ -37,18 +37,23 @@ export function activate(context: vscode.ExtensionContext): void {
 
     // 注册【运行】命令
     context.subscriptions.push(
-        vscode.commands.registerCommand('command-runner.run', (options: CommandOptions = {}) => {
+        vscode.commands.registerCommand('command-runner.run', (opts: CommandOptions = {}, files?: vscode.Uri[]) => {
             const command = new Command();
-            const cmd = options.command || options.cmd || '';
+            const cmd = opts.command || opts.cmd || '';
 
             // 兼容终端名参数
-            if (typeof options.terminal === 'string') {
-                options.terminal = { name: options.terminal };
+            if (typeof opts.terminal === 'string') {
+                opts.terminal = { name: opts.terminal };
+            }
+
+            // 添加选中的文件
+            if (files && files.length) {
+                files.forEach(argv => command.addFile(argv.fsPath));
             }
 
             // 执行命令
             if (cmd) {
-                return command.execute(cmd, options.terminal);
+                return command.execute(cmd, opts.terminal);
             }
 
             // 选择命令并执行
