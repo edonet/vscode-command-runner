@@ -6,6 +6,7 @@ Run custom shell command defined in vs code configuration and node module packag
 
 * Run custom shell command
 * Run selected content as shell command
+* Run custom shell command with selected files by explorer context menu
 
 ## Extension Settings
 
@@ -13,6 +14,9 @@ You can defined shell command in vs code configuration
 
 ```json
 {
+    "command-runner.terminal.name": "runCommand",
+    "command-runner.terminal.autoClear": true,
+    "command-runner.terminal.autoFocus": true,
     "command-runner.commands": {
         "echo workspaceFolder": "echo ${workspaceFolder}",
         "echo file": "echo ${file}"
@@ -47,7 +51,10 @@ You can customize the terminal for the command
 {
     "key": "ctrl+alt+1",
     "command": "command-runner.run",
-    "args": { "terminal": "terminalName" }
+    "args": {
+        "command": "echo file",
+        "terminal": "runCommand"
+    }
 }
 ```
 or
@@ -57,9 +64,11 @@ or
     "command": "command-runner.run",
     "args": {
         "terminal": {
-            "name": "terminalName",
+            "name": "runCommand",
             "cwd": "path/to/runCommand",
-            "shellArgs": []
+            "shellArgs": [],
+            "autoClear": true,
+            "autoFocus": true
         }
     }
 }
@@ -76,6 +85,7 @@ or
 * `${lineNumbers}`: the all selected line number, eg. `41,46,80`;
 * `${selectedText}`: the first selected text;
 * `${selectedTextList}`: the all selected text list, eg. `sl1 sl2`;
+* `${selectedTextSection}`: the all selected text section, eg. `sl1\nsl2`;
 * `${selectedPosition}`: the selected position list, eg. `21,6`;
 * `${selectedPositionList}`: the all selected position list, eg. `45,6 80,18 82,5`;
 * `${relativeFile}`: activated file relative path;
@@ -83,6 +93,7 @@ or
 * `${workspaceFolderBasename}`: activated workspace folder basename;
 * `${homedir}`: the home directory of the current user;
 * `${tmpdir}`: default directory for temporary files;
+* `${platform}`: os platform;
 * `${env:PATH}`: shell environment variable "PATH";
 * `${config:editor.fontSize}`: vscode config variable;
 * `${command:workbench.action.terminal.clear}`: run vscode command;
