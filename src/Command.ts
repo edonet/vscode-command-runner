@@ -153,14 +153,9 @@ export default class Command {
 
     /* 执行选择的文字 */
     async executeSelectText(options?: TerminalOptions) {
-        const selected = this.$accessor.variable('selectedTextSection');
-        const cmds = selected.split('\n');
-
-        console.log(cmds);
+        const cmd = this.$accessor.variable('selectedTextSection');
 
         // 执行命令
-        for (const cmd of cmds) {
-            await this.execute(cmd.trim(), options);
-        }
+        await this.execute(cmd.trim(), options);
     }
 }
