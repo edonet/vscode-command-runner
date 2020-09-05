@@ -64,6 +64,11 @@ export default class Command {
     /* 存取器 */
     private $accessor = new Accessor();
 
+    /* 获取命令 */
+    get commands() {
+        return this.$accessor.commands();
+    }
+
     /* 添加文件 */
     addFile(file?: string) {
         file && this.$files.push(JSON.stringify(file));
