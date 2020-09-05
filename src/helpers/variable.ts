@@ -212,7 +212,7 @@ export default () => cache({
 
         // 存在选项
         if (selections && selections.length && document) {
-            return selections.map(sl => document.getText(sl)).join('\n');
+            return selections.map(sl => document.getText(sl)).join('\n').trim();
         }
 
         // 返回空

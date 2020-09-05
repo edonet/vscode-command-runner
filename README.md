@@ -97,6 +97,8 @@ or
 * `${env:PATH}`: shell environment variable "PATH";
 * `${config:editor.fontSize}`: vscode config variable;
 * `${command:workbench.action.terminal.clear}`: run vscode command;
+* `${input}`: input a value as parameter;
+* `${input:defaultValue}`: input a value as parameter, and specify the default value;
 
 ## Usages
 

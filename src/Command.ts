@@ -13,6 +13,7 @@
  *****************************************
  */
 import * as vscode from 'vscode';
+import replace from './helpers/replace';
 import Accessor, { VariableScope } from './Accessor';
 
 /**
@@ -58,11 +59,13 @@ export default class Command {
     /* 选中的文件列表 */
     private $files: string[] = [];
 
-    /* 变量配置项 */
-    private $regexp = /\$\{(.*?)\}/g;
-
     /* 存取器 */
     private $accessor = new Accessor();
+
+    /* 获取命令 */
+    get commands() {
+        return this.$accessor.commands();
+    }
 
     /* 添加文件 */
     addFile(file?: string) {
@@ -70,9 +73,9 @@ export default class Command {
     }
 
     /* 解析命令 */
-    resolve(cmd: string): string {
-        return cmd && cmd.replace(this.$regexp, (str: string, $1: string): string => {
-            let [variable, args = ''] = $1.split(':');
+    async resolve(cmd: string): Promise<string> {
+        return cmd && replace(cmd, async str => {
+            let [variable, args = ''] = str.split(':');
 
             // 去除空白
             variable = variable.trim();
@@ -84,6 +87,8 @@ export default class Command {
                     return args && this.$accessor.config(args) as string;
                 case 'env':
                     return args && this.$accessor.env(args);
+                case 'input':
+                    return await this.$accessor.input(args) || args;
                 case 'command':
                     args && vscode.commands.executeCommand(args);
                     return '';
@@ -145,7 +150,7 @@ export default class Command {
         const command = cmd + ' ' + this.$files.join(' ');
 
         // 写入命令
-        terminal.sendText(this.resolve(command));
+        terminal.sendText(await this.resolve(command));
 
         // 输出命令信息
         console.log('--> Run Command:', command);
@@ -153,9 +158,6 @@ export default class Command {
 
     /* 执行选择的文字 */
     async executeSelectText(options?: TerminalOptions) {
-        const cmd = this.$accessor.variable('selectedTextSection');
-
-        // 执行命令
-        await this.execute(cmd.trim(), options);
+        await this.execute(this.$accessor.variable('selectedTextSection'), options);
     }
 }

@@ -12,6 +12,7 @@
  * 加载依赖
  *****************************************
  */
+import * as vscode from 'vscode';
 import variable from './helpers/variable';
 
 
@@ -88,5 +89,10 @@ export default class Accessor {
     /* 获取命令集 */
     commands(): Record<string, string> {
         return this.$variable.commands();
+    }
+
+    /* 获取输入 */
+    input(value: string): Thenable<string | undefined> {
+        return vscode.window.showInputBox({ placeHolder: value && `default: "${value}"` });
     }
 }
