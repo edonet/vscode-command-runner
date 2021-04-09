@@ -101,13 +101,11 @@ export default class Command {
     /* 选择命令并执行 */
     async pick(options?: TerminalOptions) {
         const commands = this.$accessor.commands();
-        const keys = Object.keys(commands).filter(
-            key => key !== 'echo' || commands[key] !== 'echo \'this is a test command: ${file}\''
-        );
+        const keys = Object.keys(commands);
 
         // 命令列表为空
         if (!keys.length) {
-            return;
+            return vscode.window.showWarningMessage('Command Runner Error: Please add commands to your settings');
         }
 
         // 显示选择列表

@@ -2,7 +2,7 @@
 	"name": "vscode-command-runner",
 	"displayName": "Command Runner",
 	"description": "vscode custom shell command runner",
-	"version": "0.0.116",
+	"version": "0.0.117",
 	"icon": "images/logo.png",
 	"publisher": "edonet",
 	"engines": {
@@ -72,7 +72,7 @@
 				"command-runner.commands": {
 					"type": "object",
 					"default": {
-						"echo": "echo 'this is a test command: ${file}'"
+						"echo": "echo 'this is a test command: ${workspaceFolder}'"
 					},
 					"description": "Set the custom command to run.",
 					"scope": "resource"
