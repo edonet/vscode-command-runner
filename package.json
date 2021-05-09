@@ -2,11 +2,11 @@
 	"name": "vscode-command-runner",
 	"displayName": "Command Runner",
 	"description": "vscode custom shell command runner",
-	"version": "0.0.117",
+	"version": "0.0.118",
 	"icon": "images/logo.png",
 	"publisher": "edonet",
 	"engines": {
-		"vscode": "^1.45.0"
+		"vscode": "^1.56.0"
 	},
 	"categories": [
 		"Other"
@@ -31,44 +31,47 @@
 			"type": "object",
 			"title": "Run Command Configuration",
 			"properties": {
-                "command-runner.terminal.name": {
-                    "type": "string",
+				"command-runner.terminal.name": {
+					"type": "string",
 					"default": "",
 					"description": "Specifies the terminal name to execute the command.",
-                    "scope": "resource"
-                },
-                "command-runner.terminal.cwd": {
-                    "type": "string",
+					"scope": "resource"
+				},
+				"command-runner.terminal.cwd": {
+					"type": "string",
 					"description": "A path or Uri for the current working directory to be used for the terminal.",
-                    "scope": "resource"
-                },
-                "command-runner.terminal.env": {
-                    "type": "string",
+					"scope": "resource"
+				},
+				"command-runner.terminal.env": {
+					"type": "string",
 					"description": "Object with environment variables that will be added to the VS Code process.",
-                    "scope": "resource"
-                },
-                "command-runner.terminal.shellPath": {
-                    "type": "string",
+					"scope": "resource"
+				},
+				"command-runner.terminal.shellPath": {
+					"type": "string",
 					"description": "A path to a custom shell executable to be used in the terminal.",
-                    "scope": "resource"
-                },
-                "command-runner.terminal.shellArgs": {
-                    "type": ["string", "array"],
+					"scope": "resource"
+				},
+				"command-runner.terminal.shellArgs": {
+					"type": [
+						"string",
+						"array"
+					],
 					"description": "Args for the custom shell executable. A string can be used on Windows only which allows specifying shell args in command-line format.",
-                    "scope": "resource"
-                },
-                "command-runner.terminal.autoClear": {
-                    "type": "boolean",
+					"scope": "resource"
+				},
+				"command-runner.terminal.autoClear": {
+					"type": "boolean",
 					"default": true,
 					"description": "Clear the content of terminal before execute the command.",
 					"scope": "resource"
-                },
-                "command-runner.terminal.autoFocus": {
-                    "type": "boolean",
+				},
+				"command-runner.terminal.autoFocus": {
+					"type": "boolean",
 					"default": true,
 					"description": "Focus the terminal when execute the command.",
 					"scope": "resource"
-                },
+				},
 				"command-runner.commands": {
 					"type": "object",
 					"default": {
@@ -82,13 +85,13 @@
 					"default": true,
 					"description": "Show 'Run Command' in editor context menu",
 					"scope": "resource"
-                },
+				},
 				"command-runner.showRunCommandInExplorerContextMenu": {
 					"type": "boolean",
 					"default": true,
 					"description": "Show 'Run Command' in explorer context menu",
 					"scope": "resource"
-                }
+				}
 			}
 		},
 		"keybindings": [
@@ -101,7 +104,7 @@
 				"command": "command-runner.runInTerminal",
 				"key": "ctrl+alt+r",
 				"mac": "ctrl+alt+r"
-            }
+			}
 		],
 		"menus": {
 			"editor/context": [
@@ -115,24 +118,24 @@
 					"command": "command-runner.runInTerminal",
 					"group": "navigation"
 				}
-            ],
-            "explorer/context": [
-                {
+			],
+			"explorer/context": [
+				{
 					"when": "config.command-runner.showRunCommandInExplorerContextMenu",
 					"command": "command-runner.run",
 					"group": "navigation"
 				}
-            ]
+			]
 		}
 	},
 	"scripts": {
-        "build": "yarn clean && vsce package",
-        "compile": "tsc -p ./",
-        "lint": "eslint src --ext ts",
-        "watch": "tsc -watch -p ./",
-        "vscode:prepublish": "yarn run compile",
-        "clean": "rm -rf ./dist"
-    },
+		"build": "yarn clean && vsce package",
+		"compile": "tsc -p ./",
+		"lint": "eslint src --ext ts",
+		"watch": "tsc -watch -p ./",
+		"vscode:prepublish": "yarn run compile",
+		"clean": "rm -rf ./dist"
+	},
 	"commands": {
 		"file": "cat ${file}",
 		"fileBasename": "echo ${fileBasename}",
@@ -164,14 +167,14 @@
 		"type": "git",
 		"url": "https://github.com/edonet/vscode-command-runner.git"
 	},
-    "devDependencies": {
-        "@types/node": "^13.11.0",
-        "@types/vscode": "^1.45.0",
-        "@typescript-eslint/eslint-plugin": "^2.30.0",
-        "@typescript-eslint/parser": "^2.30.0",
-        "eslint": "^6.8.0",
-        "typescript": "^3.8.3"
-    },
+	"devDependencies": {
+		"@types/node": "^15.0.2",
+		"@types/vscode": "^1.56.0",
+		"@typescript-eslint/eslint-plugin": "^4.22.1",
+		"@typescript-eslint/parser": "^4.22.1",
+		"eslint": "^7.26.0",
+		"typescript": "^4.2.4"
+	},
 	"__metadata": {
 		"id": "c4acb5b7-168f-4561-86ef-79352610787e",
 		"publisherDisplayName": "edonet",

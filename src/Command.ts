@@ -24,6 +24,7 @@ import Accessor, { VariableScope } from './Accessor';
 export type TerminalOptions = Partial<vscode.TerminalOptions> & {
     autoFocus?: boolean;
     autoClear?: boolean;
+    sorted?: string[];
 };
 
 
@@ -56,24 +57,32 @@ function createTerminal(options: vscode.TerminalOptions) {
  */
 export default class Command {
 
+    /* 上下文 */
+    private context: vscode.ExtensionContext;
+
     /* 选中的文件列表 */
     private $files: string[] = [];
 
     /* 存取器 */
     private $accessor = new Accessor();
 
+    /* 初始化对象 */
+    public constructor(context: vscode.ExtensionContext) {
+        this.context = context;
+    }
+
     /* 获取命令 */
-    get commands() {
+    public get commands() {
         return this.$accessor.commands();
     }
 
     /* 添加文件 */
-    addFile(file?: string) {
+    public addFile(file?: string) {
         file && this.$files.push(JSON.stringify(file));
     }
 
     /* 解析命令 */
-    async resolve(cmd: string): Promise<string> {
+    public async resolve(cmd: string): Promise<string> {
         return cmd && replace(cmd, async str => {
             let [variable, args = ''] = str.split(':');
 
@@ -99,7 +108,7 @@ export default class Command {
     }
 
     /* 选择命令并执行 */
-    async pick(options?: TerminalOptions) {
+    public async pick(options?: TerminalOptions) {
         const commands = this.$accessor.commands();
         const keys = Object.keys(commands);
 
@@ -108,11 +117,29 @@ export default class Command {
             return vscode.window.showWarningMessage('Command Runner Error: Please add commands to your settings');
         }
 
+        // 获取最近列表
+        const recent = this.context.workspaceState.get('COMMAND_RUNNER_RECENT', [] as string[]);
+
+        // 根据最近列表排序
+        if (recent && recent.length) {
+            keys.unshift.apply(keys, recent.filter(key => {
+                const idx = keys.indexOf(key);
+
+                // 存在命令
+                if (idx > -1) {
+                    return keys.splice(idx, 1);
+                }
+            }));
+        }
+
         // 显示选择列表
         try {
             const cmd = await vscode.window.showQuickPick(
                 keys, { placeHolder: 'Type or select command to run' }
             );
+
+            // 缓存最近列表
+            this.context.workspaceState.update('COMMAND_RUNNER_RECENT', [cmd, ...keys]);
 
             // 执行命令
             if (cmd) {
@@ -124,7 +151,7 @@ export default class Command {
     }
 
     /* 执行命令 */
-    async execute(cmd: string, options?: TerminalOptions) {
+    public async execute(cmd: string, options?: TerminalOptions) {
         const { autoClear, autoFocus, ...terminalOptions }: TerminalOptions = {
             ...this.$accessor.config('command-runner.terminal'),
             ...options,
@@ -155,7 +182,7 @@ export default class Command {
     }
 
     /* 执行选择的文字 */
-    async executeSelectText(options?: TerminalOptions) {
+    public async executeSelectText(options?: TerminalOptions) {
         await this.execute(this.$accessor.variable('selectedTextSection'), options);
     }
 }
