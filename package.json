@@ -13,8 +13,7 @@
 	],
 	"activationEvents": [
 		"onCommand:command-runner.run",
-		"onCommand:command-runner.runInTerminal",
-		"onCommand:command-runner.runToOutput"
+		"onCommand:command-runner.runInTerminal"
 	],
 	"main": "./dist/extension",
 	"contributes": {
@@ -26,10 +25,6 @@
 			{
 				"command": "command-runner.runInTerminal",
 				"title": "Run In Terminal"
-			},
-			{
-				"command": "command-runner.runToOutput",
-				"title": "Run and Pipe to Command Output"
 			}
 		],
 		"configuration": {
@@ -173,16 +168,12 @@
 		"url": "https://github.com/edonet/vscode-command-runner.git"
 	},
 	"devDependencies": {
-		"@types/cross-spawn": "^6.0.2",
 		"@types/node": "^15.0.2",
 		"@types/vscode": "^1.56.0",
 		"@typescript-eslint/eslint-plugin": "^4.22.1",
 		"@typescript-eslint/parser": "^4.22.1",
 		"eslint": "^7.26.0",
 		"typescript": "^4.2.4"
-	},
-	"dependencies": {
-		"p-defer": "^4.0.0"
 	},
 	"__metadata": {
 		"id": "c4acb5b7-168f-4561-86ef-79352610787e",
