@@ -13,11 +13,8 @@
  *****************************************
  */
 import * as vscode from 'vscode';
-import * as child_process from 'child_process';
-import * as util from 'util';
 import replace from './helpers/replace';
 import Accessor, { VariableScope } from './Accessor';
-import { setFlagsFromString } from 'v8';
 
 /**
  *****************************************
@@ -69,12 +66,9 @@ export default class Command {
     /* 存取器 */
     private $accessor = new Accessor();
 
-    private $toOutput = false;
-
     /* 初始化对象 */
-    public constructor(context: vscode.ExtensionContext,toOutput: boolean) {
+    public constructor(context: vscode.ExtensionContext) {
         this.context = context;
-        this.$toOutput = toOutput;
     }
 
     /* 获取命令 */
@@ -157,47 +151,34 @@ export default class Command {
     }
 
     /* 执行命令 */
-    public async execute(cmd: string, options?: TerminalOptions): Promise<string|void> {
-        if(this.$toOutput){
-            //Resolve command and arguments
-            let cmd_resolved = await this.resolve(cmd);
-            let files_resolved = await Promise.all(this.$files.map((v)=>this.resolve(v)));
+    public async execute(cmd: string, options?: TerminalOptions) {
+        const { autoClear, autoFocus, ...terminalOptions }: TerminalOptions = {
+            ...this.$accessor.config('command-runner.terminal'),
+            ...options,
+            hideFromUser: false,
+        };
 
-            //Complete command line
-            let cmd_final = cmd_resolved + " " + files_resolved.join(" ");
+        // 创建终端
+        const terminal = createTerminal(terminalOptions);
 
-            //Spawn child process
-            return (await util.promisify(child_process.exec)(cmd_final)).stdout;
-            
-        } else {
-            const { autoClear, autoFocus, ...terminalOptions }: TerminalOptions = {
-                ...this.$accessor.config('command-runner.terminal'),
-                ...options,
-                hideFromUser: false,
-            };
-    
-            // 创建终端
-            const terminal = createTerminal(terminalOptions);
-    
-            // 显示终端
-            if (autoFocus && terminal !== vscode.window.activeTerminal) {
-                terminal.show();
-            }
-    
-            // 清空终端
-            if (autoClear) {
-                await vscode.commands.executeCommand('workbench.action.terminal.clear');
-            }
-
-            // 获取命令
-            const command = cmd + ' ' + this.$files.join(' ');
-
-            // 写入命令
-            terminal.sendText(await this.resolve(command));
-
-            // 输出命令信息
-            console.log('--> Run Command:', command);
+        // 显示终端
+        if (autoFocus && terminal !== vscode.window.activeTerminal) {
+            terminal.show();
         }
+
+        // 清空终端
+        if (autoClear) {
+            await vscode.commands.executeCommand('workbench.action.terminal.clear');
+        }
+
+        // 获取命令
+        const command = cmd + ' ' + this.$files.join(' ');
+
+        // 写入命令
+        terminal.sendText(await this.resolve(command));
+
+        // 输出命令信息
+        console.log('--> Run Command:', command);
     }
 
     /* 执行选择的文字 */
