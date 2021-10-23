@@ -74,9 +74,7 @@
 				},
 				"command-runner.commands": {
 					"type": "object",
-					"default": {
-						"echo": "echo 'this is a test command: ${workspaceFolder}'"
-					},
+					"default": {},
 					"description": "Set the custom command to run.",
 					"scope": "resource"
 				},
@@ -145,6 +143,8 @@
 		"relativeFile": "echo ${relativeFile}",
 		"lineNumber": "echo ${lineNumber}",
 		"lineNumbers": "echo ${lineNumbers}",
+		"columnNumber": "echo ${columnNumber}",
+		"columnNumbers": "echo ${columnNumbers}",
 		"selectedPosition": "echo ${selectedPosition}",
 		"selectedPositionList": "echo ${selectedPositionList}",
 		"selectedText": "echo ${selectedText}",

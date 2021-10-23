@@ -29,6 +29,8 @@ export const variableMap = {
     fileExtname: 1,
     lineNumber: 1,
     lineNumbers: 1,
+    columnNumber: 1,
+    columnNumbers: 1,
     selectedText: 1,
     selectedTextList: 1,
     selectedTextSection: 1,

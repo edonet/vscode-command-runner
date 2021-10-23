@@ -114,7 +114,12 @@ export default class Command {
 
         // 命令列表为空
         if (!keys.length) {
-            return vscode.window.showWarningMessage('Command Runner Error: Please add commands to your settings');
+
+            // 添加默认命令
+            keys.push('This is an example as `echo "${workspaceFolder}"`');
+
+            // 设置默认命令语句
+            commands['This is an example as `echo "${workspaceFolder}"`'] = 'echo "${workspaceFolder}"';
         }
 
         // 获取最近列表

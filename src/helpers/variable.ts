@@ -152,13 +152,39 @@ export default () => cache({
         return '';
     },
 
-    /* 当前选择的位置 */
-    selectedPosition(): string {
+    /* 当前列 */
+    columnNumber(): string {
         const [sl] = this.selections() || [];
 
         // 存在选项
         if (sl) {
-            return [sl.active.line + 1, sl.active.character].join();
+            return sl.active.character + '';
+        }
+
+        // 返回空
+        return '';
+    },
+
+    /* 当前多列 */
+    columnNumbers(): string {
+        const [sl] = this.selections() || [];
+
+        // 存在选项
+        if (sl) {
+            return sl.active.character + '';
+        }
+
+        // 返回空
+        return '';
+    },
+
+    /* 当前选择的位置 */
+    selectedPosition(): string {
+        const selections = this.selections();
+
+        // 存在选项
+        if (selections && selections.length) {
+            return selections.map(sl => sl.active.character).join(' ');
         }
 
         // 返回空
