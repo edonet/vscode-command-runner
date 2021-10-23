@@ -2,11 +2,11 @@
 	"name": "vscode-command-runner",
 	"displayName": "Command Runner",
 	"description": "vscode custom shell command runner",
-	"version": "0.0.118",
+	"version": "0.0.119",
 	"icon": "images/logo.png",
 	"publisher": "edonet",
 	"engines": {
-		"vscode": "^1.56.0"
+		"vscode": "^1.62.0"
 	},
 	"categories": [
 		"Other"
@@ -127,7 +127,7 @@
 		}
 	},
 	"scripts": {
-		"build": "yarn clean && vsce package",
+		"build": "yarn clean && yarn compile && vsce package",
 		"compile": "tsc -p ./",
 		"lint": "eslint src --ext ts",
 		"watch": "tsc -watch -p ./",
@@ -168,12 +168,12 @@
 		"url": "https://github.com/edonet/vscode-command-runner.git"
 	},
 	"devDependencies": {
-		"@types/node": "^15.0.2",
-		"@types/vscode": "^1.56.0",
-		"@typescript-eslint/eslint-plugin": "^4.22.1",
-		"@typescript-eslint/parser": "^4.22.1",
-		"eslint": "^7.26.0",
-		"typescript": "^4.2.4"
+		"@types/node": "^16.11.4",
+		"@types/vscode": "^1.61.0",
+		"@typescript-eslint/eslint-plugin": "^5.1.0",
+		"@typescript-eslint/parser": "^5.1.0",
+		"eslint": "^8.1.0",
+		"typescript": "^4.4.4"
 	},
 	"__metadata": {
 		"id": "c4acb5b7-168f-4561-86ef-79352610787e",
