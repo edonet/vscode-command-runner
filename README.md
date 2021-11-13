@@ -83,11 +83,15 @@ or
 * `${fileExtname}`: activated file extension;
 * `${lineNumber}`: the first selected line number;
 * `${lineNumbers}`: the all selected line number, eg. `41,46,80`;
+* `${columnNumber}`: the first selected column number;
+* `${columnNumbers}`: the all selected column number, eg. `41,46,80`;
 * `${selectedText}`: the first selected text;
 * `${selectedTextList}`: the all selected text list, eg. `sl1 sl2`;
 * `${selectedTextSection}`: the all selected text section, eg. `sl1\nsl2`;
 * `${selectedPosition}`: the selected position list, eg. `21,6`;
 * `${selectedPositionList}`: the all selected position list, eg. `45,6 80,18 82,5`;
+* `${selectedLocation}`: the first selected location, eg. `21,6,21,10`;
+* `${selectedLocationList}`: the all selected location list, eg. `21,6,21,10 22,6,22,10 23,6,23,10`;
 * `${relativeFile}`: activated file relative path;
 * `${workspaceFolder}`: activated workspace folder path;
 * `${workspaceFolderBasename}`: activated workspace folder basename;

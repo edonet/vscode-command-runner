@@ -245,6 +245,35 @@ export default () => cache({
         return '';
     },
 
+    /* 当前选择的区域 */
+    selectedLocation(): string {
+        const selections = this.selections();
+
+        // 存在选项
+        if (selections && selections.length) {
+            const [sl] = selections;
+
+            // 生成位置信息
+            return [sl.start.line + 1, sl.start.character, sl.anchor.line + 1, sl.end.character].join(',');
+        }
+
+        // 返回空
+        return '';
+    },
+
+    /* 当前选择的区域列表 */
+    selectedLocationList(): string {
+        const selections = this.selections();
+
+        // 存在选项
+        if (selections && selections.length) {
+            return selections.map(sl => [sl.start.line + 1, sl.start.character, sl.anchor.line + 1, sl.end.character].join(',')).join(' ');
+        }
+
+        // 返回空
+        return '';
+    },
+
     /* 当前工作目录 */
     workspaceFolder(): string {
         const workspace = this.workspace();

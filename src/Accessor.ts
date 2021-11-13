@@ -36,6 +36,8 @@ export const variableMap = {
     selectedTextSection: 1,
     selectedPosition: 1,
     selectedPositionList: 1,
+    selectedLocation: 1,
+    selectedLocationList: 1,
     relativeFile: 1,
     workspaceFolder: 1,
     workspaceFolderBasename: 1,

@@ -6,7 +6,7 @@
 	"icon": "images/logo.png",
 	"publisher": "edonet",
 	"engines": {
-		"vscode": "^1.62.0"
+		"vscode": "^1.60.0"
 	},
 	"categories": [
 		"Other"
@@ -131,6 +131,7 @@
 		"compile": "tsc -p ./",
 		"lint": "eslint src --ext ts",
 		"watch": "tsc -watch -p ./",
+		"symlink": "node scripts/symlink.js",
 		"vscode:prepublish": "yarn run compile",
 		"clean": "rm -rf ./dist"
 	},
@@ -147,6 +148,8 @@
 		"columnNumbers": "echo ${columnNumbers}",
 		"selectedPosition": "echo ${selectedPosition}",
 		"selectedPositionList": "echo ${selectedPositionList}",
+		"selectedLocation": "echo ${selectedLocation}",
+		"selectedLocationList": "echo ${selectedLocationList}",
 		"selectedText": "echo ${selectedText}",
 		"selectedTextList": "echo ${selectedTextList}",
 		"selectedTextSection": "echo ${selectedTextSection}",
