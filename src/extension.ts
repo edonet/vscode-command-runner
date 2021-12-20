@@ -49,10 +49,11 @@ export function activate(context: vscode.ExtensionContext): void {
             // 添加选中的文件
             if (files && files.length) {
                 files.forEach(argv => command.addFile(argv.fsPath));
-            } else { 
+            } else {
                 // Try to get the selected file from the explorer (Workaround)
                 await vscode.commands.executeCommand('copyFilePath');
-                command.addFile(await vscode.env.clipboard.readText());
+                const clipboardFiles = await vscode.env.clipboard.readText();
+                clipboardFiles.split(/\r?\n/).forEach(f => command.addFile(f));
             }
 
             // 执行命令
