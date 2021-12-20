@@ -52,7 +52,7 @@ export function activate(context: vscode.ExtensionContext): void {
             } else { 
                 // Try to get the selected file from the explorer (Workaround)
                 await vscode.commands.executeCommand('copyFilePath');
-                command.addFile(await vscode.env.clipboard.readText())
+                command.addFile(await vscode.env.clipboard.readText());
             }
 
             // 执行命令
