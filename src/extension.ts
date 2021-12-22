@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
     // 注册【运行】命令
     context.subscriptions.push(
-        vscode.commands.registerCommand('command-runner.run', (opts: CommandOptions = {}, files?: vscode.Uri[]) => {
+        vscode.commands.registerCommand('command-runner.run', async (opts: CommandOptions = {}, files?: vscode.Uri[]) => {
             const command = new Command(context);
             const cmd = opts.command || opts.cmd || '';
 
@@ -49,6 +49,11 @@ export function activate(context: vscode.ExtensionContext): void {
             // 添加选中的文件
             if (files && files.length) {
                 files.forEach(argv => command.addFile(argv.fsPath));
+            } else {
+                // Try to get the selected file from the explorer (Workaround)
+                await vscode.commands.executeCommand('copyFilePath');
+                const clipboardFiles = await vscode.env.clipboard.readText();
+                clipboardFiles.split(/\r?\n/).forEach(f => command.addFile(f));
             }
 
             // 执行命令

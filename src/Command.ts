@@ -167,7 +167,7 @@ export default class Command {
         const terminal = createTerminal(terminalOptions);
 
         // 显示终端
-        if (autoFocus && terminal !== vscode.window.activeTerminal) {
+        if (autoFocus) {
             terminal.show();
         }
 
