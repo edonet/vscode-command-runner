@@ -25,6 +25,7 @@ export interface CommandOptions {
     cmd?: string;
     command?: string;
     terminal?: string | TerminalOptions;
+    appendExplorerSelectedFiles?: boolean;
 }
 
 
@@ -49,7 +50,7 @@ export function activate(context: vscode.ExtensionContext): void {
             // 添加选中的文件
             if (files && files.length) {
                 files.forEach(argv => command.addFile(argv.fsPath));
-            } else {
+            } else if (opts.appendExplorerSelectedFiles) {
                 // Try to get the selected file from the explorer (Workaround)
                 await vscode.commands.executeCommand('copyFilePath');
                 const clipboardFiles = await vscode.env.clipboard.readText();
