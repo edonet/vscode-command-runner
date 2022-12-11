@@ -39,6 +39,8 @@ export const variableMap = {
     selectedLocation: 1,
     selectedLocationList: 1,
     relativeFile: 1,
+    relativeFileNoExtension: 1,
+    relativeFileDirname: 1,
     workspaceFolder: 1,
     workspaceFolderBasename: 1,
     homedir: 1,

@@ -99,7 +99,7 @@ export default class Command {
                 case 'input':
                     return await this.$accessor.input(args) || args;
                 case 'command':
-                    return args && await vscode.commands.executeCommand<string>(args) as string;
+                    return args && await vscode.commands.executeCommand(args) || '';
                 default:
                     return this.$accessor.variable(variable as VariableScope);
             }

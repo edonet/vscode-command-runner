@@ -123,7 +123,17 @@ export default () => cache({
 
     /* 当前文件相对路径 */
     relativeFile(): string {
-        return vscode.workspace.asRelativePath(this.file());
+        return this.file() && vscode.workspace.asRelativePath(this.file());
+    },
+
+    /* 当前文件相对路径去除扩展名 */
+    relativeFileNoExtension(): string {
+        return this.file() && path.basename(this.relativeFile(), this.fileExtname());
+    },
+
+    /* 当前相对目录 */
+    relativeFileDirname(): string {
+        return this.file() && path.dirname(this.relativeFile());
     },
 
     /* 当前行 */

@@ -16,6 +16,15 @@
 		"onCommand:command-runner.runInTerminal"
 	],
 	"main": "./dist/extension",
+	"scripts": {
+		"build": "yarn clean && yarn compile && vsce package",
+		"compile": "tsc -p ./",
+		"lint": "eslint src --ext ts",
+		"watch": "tsc -watch -p ./",
+		"symlink": "node scripts/symlink.js",
+		"vscode:prepublish": "yarn run compile",
+		"clean": "rm -rf ./dist"
+	},
 	"contributes": {
 		"commands": [
 			{
@@ -126,15 +135,6 @@
 			]
 		}
 	},
-	"scripts": {
-		"build": "yarn clean && yarn compile && vsce package",
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"symlink": "node scripts/symlink.js",
-		"vscode:prepublish": "yarn run compile",
-		"clean": "rm -rf ./dist"
-	},
 	"commands": {
 		"file": "cat ${file}",
 		"fileBasename": "echo ${fileBasename}",
@@ -142,6 +142,8 @@
 		"fileDirname": "echo ${fileDirname}",
 		"fileExtname": "echo ${fileExtname}",
 		"relativeFile": "echo ${relativeFile}",
+		"relativeFileNoExtension": "echo ${relativeFileNoExtension}",
+		"relativeFileDirname": "echo ${relativeFileDirname}",
 		"lineNumber": "echo ${lineNumber}",
 		"lineNumbers": "echo ${lineNumbers}",
 		"columnNumber": "echo ${columnNumber}",
