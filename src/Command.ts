@@ -82,13 +82,18 @@ export default class Command {
     }
 
     /* 解析命令 */
-    public async resolve(cmd: string): Promise<string> {
+    public async resolve(cmd: string, predefined: Record<string, string> = {}): Promise<string> {
         return cmd && replace(cmd, async str => {
             let [variable, args = ''] = str.split(':');
 
             // 去除空白
             variable = variable.trim();
             args = args.trim();
+
+            // 解析预设变量
+            if (predefined[variable]) {
+                return predefined[variable];
+            }
 
             // 解析变量
             switch (variable) {
@@ -167,7 +172,7 @@ export default class Command {
 
         // 显示终端
         if (autoFocus) {
-            terminal.show();
+            terminal.show(true);
         }
 
         // 清空终端
@@ -175,11 +180,19 @@ export default class Command {
             await vscode.commands.executeCommand('workbench.action.terminal.clear');
         }
 
+        // 预设数据
+        const predefined = {
+            selectedFile: this.$files[0] || '',
+            selectedFiles: this.$files.join(' '),
+        };
+
         // 获取命令
-        const command = cmd + ' ' + this.$files.join(' ');
+        const command = this.$accessor.config('command-runner.autoAppendSelectedFiles')
+            ? cmd + ' ' + this.$files.join(' ')
+            : cmd;
 
         // 写入命令
-        terminal.sendText(await this.resolve(command));
+        terminal.sendText(await this.resolve(command, predefined));
 
         // 输出命令信息
         console.log('--> Run Command:', command);

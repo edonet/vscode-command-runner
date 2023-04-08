@@ -2,7 +2,7 @@
 	"name": "vscode-command-runner",
 	"displayName": "Command Runner",
 	"description": "vscode custom shell command runner",
-	"version": "0.0.123",
+	"version": "0.0.124",
 	"icon": "images/logo.png",
 	"publisher": "edonet",
 	"engines": {
@@ -23,7 +23,7 @@
 		"watch": "tsc -watch -p ./",
 		"symlink": "node scripts/symlink.js",
 		"vscode:prepublish": "yarn run compile",
-		"clean": "rm -rf ./dist"
+		"clean": "rimraf ./dist"
 	},
 	"contributes": {
 		"commands": [
@@ -87,6 +87,12 @@
 					"description": "Set the custom command to run.",
 					"scope": "resource"
 				},
+				"command-runner.autoAppendSelectedFiles": {
+					"type": "boolean",
+					"default": false,
+					"description": "Focus the terminal when execute the command.",
+					"scope": "resource"
+				},
 				"command-runner.showRunCommandInEditorContextMenu": {
 					"type": "boolean",
 					"default": true,
@@ -148,6 +154,8 @@
 		"lineNumbers": "echo ${lineNumbers}",
 		"columnNumber": "echo ${columnNumber}",
 		"columnNumbers": "echo ${columnNumbers}",
+		"selectedFile": "echo ${selectedFile}",
+		"selectedFiles": "echo ${selectedFiles}",
 		"selectedPosition": "echo ${selectedPosition}",
 		"selectedPositionList": "echo ${selectedPositionList}",
 		"selectedLocation": "echo ${selectedLocation}",
@@ -178,6 +186,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.1.0",
 		"@typescript-eslint/parser": "^5.1.0",
 		"eslint": "^8.1.0",
+		"rimraf": "^4.4.1",
 		"typescript": "^4.4.4"
 	},
 	"__metadata": {

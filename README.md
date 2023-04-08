@@ -85,6 +85,8 @@ or
 * `${lineNumbers}`: the all selected line number, eg. `41,46,80`;
 * `${columnNumber}`: the first selected column number;
 * `${columnNumbers}`: the all selected column number, eg. `41,46,80`;
+* `${selectedFile}`: the first selected file/folder from the context menu`;
+* `${selectedFiles}`: the selected file/folder list from the context menu or use config, eg. `"path/to/file1" "path/to/file2"`;
 * `${selectedText}`: the first selected text;
 * `${selectedTextList}`: the all selected text list, eg. `sl1 sl2`;
 * `${selectedTextSection}`: the all selected text section, eg. `sl1\nsl2`;
